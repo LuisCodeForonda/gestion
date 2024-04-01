@@ -1,17 +1,15 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-gray-800 leading-tight">
-            {{ __('equipo > edit') }}
+            {{ __('usuario > edit') }}
         </h2>
     </x-slot>
 
     
-    <form action="{{ route('equipo.update', $equipo->id) }}" method="post">
+    <form action="{{ route('usuario.update', $usuario) }}" method="post">
         @csrf
         @method('put')
-        @include('equipo.form')
+        @include('usuario.form',['mostrar' => false])
     </form>
     
 </x-app-layout>
-
-    

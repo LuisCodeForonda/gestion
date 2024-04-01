@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Accesorio;
+use App\Models\Accion;
 use App\Models\Equipo;
 use App\Models\Marca;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class EquipoController extends Controller
 {
@@ -13,7 +16,7 @@ class EquipoController extends Controller
      */
     public function index()
     {
-        return view('equipo.index', ['equipos'=>Equipo::all()]);
+        return view('equipo.index', ['equipos'=>Equipo::orderBy('created_at', 'desc')->paginate(10)]);
     }
 
     /**
@@ -34,16 +37,27 @@ class EquipoController extends Controller
             'serietec' => 'required|unique:equipos',
             'estado' => 'required',
         ]);
-        Equipo::create($request->all());
+        Equipo::create([
+            'descripcion' => $request->descripcion,
+            'id_marca' => $request->id_marca,
+            'modelo' => $request->modelo,
+            'serie' => $request->serie,
+            'serietec' => $request->serietec,
+            'estado' => $request->estado,
+            'slug' => Str::slug($request->serietec),
+        ]);
         return redirect()->route('equipo.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Equipo $equipo)
+    public function show($slug)
     {
-        //
+        $equipo = Equipo::where('slug', '=', $slug)->first();
+        $accesorios = Accesorio::where('id_equipo', '=', $equipo->id)->get();
+        $acciones = Accion::where('id_equipo', '=', $equipo->id)->get();
+        return view('equipo.show', compact('equipo', 'accesorios', 'acciones'));
     }
 
     /**
@@ -61,10 +75,17 @@ class EquipoController extends Controller
     {
         request()->validate([
             'descripcion' => 'required',
+            'serietec' => 'required|unique:equipos',
             'estado' => 'required',
         ]);
-
-        $equipo->update($request->all());
+        Equipo::create([
+            'descripcion' => $request->descripcion,
+            'id_marca' => $request->id_marca,
+            'modelo' => $request->modelo,
+            'serie' => $request->serie,
+            'serietec' => $request->serietec,
+            'estado' => $request->estado,
+        ]);
         return redirect()->route('equipo.index');
     }
 

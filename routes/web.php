@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Controllers\AccesorioController;
+use App\Http\Controllers\AccionController;
+use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RolController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,11 +27,13 @@ Route::get('/', function () {
 Route::prefix('/dashboard')->group(function () {
     Route::get('', function () {
         return view('dashboard');
-    })->middleware(['auth', 'verified'])->name('dashboard');
+    })->middleware(['auth'])->name('dashboard');
     Route::resource('marca', MarcaController::class)->middleware('auth');
-    Route::resource('equipo', MarcaController::class)->middleware('auth');
-    Route::resource('accesorio', MarcaController::class)->middleware('auth');
-    Route::resource('accion', MarcaController::class)->middleware('auth');
+    Route::resource('equipo', EquipoController::class)->middleware('auth');
+    Route::resource('accesorio', AccesorioController::class)->middleware('auth');
+    Route::resource('accion', AccionController::class)->middleware('auth');
+    Route::resource('usuario', UserController::class)->middleware('auth');
+    Route::resource('rol', RolController::class)->middleware('auth');
 });
 
 

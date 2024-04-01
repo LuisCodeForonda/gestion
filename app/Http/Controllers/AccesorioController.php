@@ -14,7 +14,7 @@ class AccesorioController extends Controller
      */
     public function index() 
     {
-        return view('accesorio.index', ['accesorios'=>Accesorio::all()]);
+        return view('accesorio.index', ['accesorios'=>Accesorio::orderBy('created_at', 'desc')->paginate(10)]);
     }
 
     /**
@@ -33,6 +33,8 @@ class AccesorioController extends Controller
         request()->validate([
             'descripcion' => 'required',
             'id_equipo' => 'required',
+            'id_marca' => 'required',
+            'cantidad' => 'required|integer',
         ]);
         Accesorio::create($request->all());
         return redirect()->route('accesorio.index');

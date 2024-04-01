@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('serie', 50)->nullable();
             $table->string('serietec', 50)->unique();
             $table->string('estado', 30);
+            $table->string('slug', 50)->unique();
             $table->timestamps(); 
         });
     }

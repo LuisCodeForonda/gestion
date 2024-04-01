@@ -12,7 +12,7 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        return view('marca.index', ['marcas'=>Marca::all()]);
+        return view('marca.index', ['marcas'=>Marca::orderBy('created_at', 'desc')->paginate(10)]);
     }
 
     /**

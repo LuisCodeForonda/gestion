@@ -1,14 +1,14 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-gray-800 leading-tight">
+            {{ __('equipo > create') }}
+        </h2>
+    </x-slot>
 
-@section('title', 'equipo')
-
-@section('content')
-    hello wordl
-    
     <form action="{{ route('equipo.store') }}" method="post">
         @csrf
         @include('equipo.form')
     </form>
-    
-@endsection
+</x-app-layout>
+
     

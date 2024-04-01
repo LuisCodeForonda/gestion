@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-slate-200 border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -12,22 +12,51 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('marca.index')" :active="request()->routeIs('marca.index')">
+                    <x-nav-link :href="route('usuario.index')" :active="
+                        request()->routeIs('usuario.index') || 
+                        request()->routeIs('usuario.create') ||
+                        request()->routeIs('usuario.edit')">
+                        {{ __('Usuario') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('rol.index')" :active="
+                        request()->routeIs('rol.index') ||
+                        request()->routeIs('rol.create') ||
+                        request()->routeIs('rol.edit')">
+                        {{ __('Roles') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('marca.index')" :active="
+                        request()->routeIs('marca.index') ||
+                        request()->routeIs('marca.create') ||
+                        request()->routeIs('marca.edit')">
                         {{ __('Marca') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('equipo.index')" :active="request()->routeIs('equipo.index')">
+                    <x-nav-link :href="route('equipo.index')" :active="
+                        request()->routeIs('equipo.index') ||
+                        request()->routeIs('equipo.create') ||
+                        request()->routeIs('equipo.edit') ||
+                        request()->routeIs('equipo.show')">
                         {{ __('Equipo') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('accesorio.index')" :active="request()->routeIs('accesorio.index')">
+                    <x-nav-link :href="route('accesorio.index')" :active="
+                        request()->routeIs('accesorio.index') ||
+                        request()->routeIs('accesorio.create') ||
+                        request()->routeIs('accesorio.edit')">
                         {{ __('Accesorios') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('accion.index')" :active="request()->routeIs('accion.index')">
+                    <x-nav-link :href="route('accion.index')" :active="
+                        request()->routeIs('accion.index') ||
+                        request()->routeIs('accion.create') ||
+                        request()->routeIs('accion.edit')">
                         {{ __('Acciones') }}
                     </x-nav-link>
                 </div>
@@ -82,8 +111,43 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('usuario.index')" :active="
+                request()->routeIs('usuario.index') ||
+                request()->routeIs('usuario.create') ||
+                request()->routeIs('usuario.edit')">
+                {{ __('Usuario') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('rol.index')" :active="
+                request()->routeIs('rol.index') ||
+                request()->routeIs('rol.create') ||
+                request()->routeIs('rol.edit')">
+                {{ __('Rol') }}
+            </x-responsive-nav-link>
+            @can('dahsboard.marca.index')
+                <x-responsive-nav-link :href="route('marca.index')" :active="
+                request()->routeIs('marca.index') ||
+                request()->routeIs('marca.create') ||
+                request()->routeIs('marca.edit')">
+                {{ __('Marca') }}
+                </x-responsive-nav-link>
+            @endcan
+            <x-responsive-nav-link :href="route('equipo.index')" :active="
+                request()->routeIs('equipo.index') ||
+                request()->routeIs('equipo.create') ||
+                request()->routeIs('equipo.edit')">
+                {{ __('Equipo') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('accesorio.index')" :active="
+                request()->routeIs('accesorio.index') ||
+                request()->routeIs('accesorio.create') ||
+                request()->routeIs('accesorio.edit')">
+                {{ __('Accesorio') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('accion.index')" :active="
+                request()->routeIs('accion.index') ||
+                request()->routeIs('accion.create') ||
+                request()->routeIs('accion.edit')">
+                {{ __('Accion') }}
             </x-responsive-nav-link>
         </div>
 

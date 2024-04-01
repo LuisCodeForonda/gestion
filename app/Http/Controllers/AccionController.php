@@ -14,7 +14,7 @@ class AccionController extends Controller
      */
     public function index()
     {
-        return view('accion.index', ['accions'=>Accion::all()]);
+        return view('accion.index', ['accions'=>Accion::orderBy('created_at', 'desc')->paginate(10)]);
     }
 
     /**

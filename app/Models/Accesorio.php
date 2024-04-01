@@ -14,4 +14,8 @@ class Accesorio extends Model
     public function marca(){
         return $this->belongsTo(Marca::class, 'id_marca');
     }
+
+    public function equipo(){
+        return $this->belongsTo(Equipo::class, 'id_equipo');
+    }
 }

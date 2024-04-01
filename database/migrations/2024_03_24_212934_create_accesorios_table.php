@@ -16,8 +16,8 @@ return new class extends Migration
             $table->text('descripcion', 200);
             $table->foreignId('id_equipo')->nullable()->constrained('equipos')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('id_marca')->nullable()->constrained('marcas')->cascadeOnUpdate()->nullOnDelete();
-            $table->string('modelo', 30);
-            $table->string('serie', 50);
+            $table->string('modelo', 30)->nullable();
+            $table->string('serie', 50)->nullable();
             $table->integer('cantidad');
             $table->timestamps();
         });
