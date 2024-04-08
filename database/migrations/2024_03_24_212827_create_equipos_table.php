@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('descripcion', 200);
             $table->foreignId('id_marca')->nullable()->constrained('marcas')->cascadeOnUpdate()->nullOnDelete();
-            $table->string('modelo', 30);
+            $table->string('modelo', 30)->nullable();
             $table->string('serie', 50)->nullable();
             $table->string('serietec', 50)->unique();
             $table->string('estado', 30);

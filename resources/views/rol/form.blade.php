@@ -1,4 +1,4 @@
-<div class="max-w-lg mx-auto bg-white p-4 m-4">
+<div class="max-w-lg mx-auto bg-white dark:bg-slate-800 p-4 m-4">
     <div class="grid gap-6 mb-6">
         <div>
             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>

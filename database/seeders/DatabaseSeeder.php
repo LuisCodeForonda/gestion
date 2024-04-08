@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'dahsboard.equipo.create'])->syncRoles([$role]);
         Permission::create(['name' => 'dahsboard.equipo.edit'])->syncRoles([$role]);
         Permission::create(['name' => 'dahsboard.equipo.destroy'])->syncRoles([$role]);
+        Permission::create(['name' => 'dahsboard.equipo.show'])->syncRoles([$role]);
 
         Permission::create(['name' => 'dahsboard.accesorio.index'])->syncRoles([$role]);
         Permission::create(['name' => 'dahsboard.accesorio.create'])->syncRoles([$role]);
@@ -51,10 +52,34 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'dahsboard.accion.edit'])->syncRoles([$role]);
         Permission::create(['name' => 'dahsboard.accion.destroy'])->syncRoles([$role]);
 
-        \App\Models\User::factory()->create([
+        \App\Models\User::create([
             'name' => 'Luis Foronda',
             'email' => 'luis@gmail.com',
             'password' => Hash::make('12345678'),
         ])->assignRole($role);
+
+        \App\Models\Marca::create([
+            'nombre' => 'Samsung',
+        ]);
+        \App\Models\Marca::create([
+            'nombre' => 'Master G',
+        ]);
+        \App\Models\Marca::create([
+            'nombre' => 'Sony',
+        ]);
+        \App\Models\Marca::create([
+            'nombre' => 'Skyword',
+        ]);
+
+        \App\Models\Equipo::create([
+            'descripcion' => 'Televisor 24" Full HD',
+            'id_marca' => 1,
+            'serietec' => '99273kdkjd38djdf',
+            'slug' => '99273kdkjd38djdf',
+            'estado' => 'Operativo',
+        ]);
+
+
+
     }
 }

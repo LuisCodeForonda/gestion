@@ -11,6 +11,14 @@ use Illuminate\Support\Str;
 
 class EquipoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:dahsboard.equipo.index', ['only' => ['index']]);
+        $this->middleware('permission:dahsboard.equipo.show', ['only' => ['show']]);
+        $this->middleware('permission:dahsboard.equipo.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:dahsboard.equipo.edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:dahsboard.equipo.destroy', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -75,15 +83,13 @@ class EquipoController extends Controller
     {
         request()->validate([
             'descripcion' => 'required',
-            'serietec' => 'required|unique:equipos',
             'estado' => 'required',
         ]);
-        Equipo::create([
+        $equipo->update([
             'descripcion' => $request->descripcion,
             'id_marca' => $request->id_marca,
             'modelo' => $request->modelo,
             'serie' => $request->serie,
-            'serietec' => $request->serietec,
             'estado' => $request->estado,
         ]);
         return redirect()->route('equipo.index');

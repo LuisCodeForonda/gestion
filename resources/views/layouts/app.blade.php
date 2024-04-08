@@ -16,12 +16,12 @@
         <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-200">
+        <div class="min-h-screen bg-gray-200 dark:bg-slate-800">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="bg-gray-200 shadow">
+                <header class="bg-gray-200 shadow dark:bg-slate-800">
                     <div class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>

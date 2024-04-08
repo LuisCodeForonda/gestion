@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class AccesorioController extends Controller
 {
+    public function __construct()
+    {   
+        $this->middleware('permission:dahsboard.accesorio.index', ['only' => ['index']]);
+        $this->middleware('permission:dahsboard.accesorio.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:dahsboard.accesorio.edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:dahsboard.accesorio.destroy', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      */

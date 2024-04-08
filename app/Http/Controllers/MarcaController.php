@@ -4,15 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Models\Marca;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MarcaController extends Controller
 {
+    public function __construct()
+    {   
+        $this->middleware('permission:dahsboard.marca.index', ['only' => ['index']]);
+        $this->middleware('permission:dahsboard.marca.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:dahsboard.marca.edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:dahsboard.marca.destroy', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('marca.index', ['marcas'=>Marca::orderBy('created_at', 'desc')->paginate(10)]);
+        if($request->has('search')){
+            $marcas = Marca::where('nombre', 'LIKE', '%'.$request->search.'%')->paginate(10);
+        }else{
+            $marcas = Marca::orderBy('created_at', 'desc')->paginate(10);
+        }
+        return view('marca.index', ['marcas'=>$marcas]);
     }
 
     /**
@@ -70,5 +83,12 @@ class MarcaController extends Controller
     {
         $marca->delete();
         return redirect()->route('marca.index');
+    }
+
+    public function pdf(Request $request)
+    {
+        $marcas = Marca::all();
+        $user = Auth::user()->name;
+        return view('marca.pdf', compact('marcas', 'user'));
     }
 }
