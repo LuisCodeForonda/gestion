@@ -9,27 +9,32 @@ use Illuminate\Http\Request;
 
 class AccesorioController extends Controller
 {
-    public function __construct()
-    {   
-        $this->middleware('permission:dahsboard.accesorio.index', ['only' => ['index']]);
-        $this->middleware('permission:dahsboard.accesorio.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:dahsboard.accesorio.edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:dahsboard.accesorio.destroy', ['only' => ['destroy']]);
-    }
     /**
      * Display a listing of the resource.
      */
-    public function index() 
+    public function index(Request $request) 
     {
-        return view('accesorio.index', ['accesorios'=>Accesorio::orderBy('created_at', 'desc')->paginate(10)]);
+        if($request->has('search')){
+            $accesorios = Accesorio::where('descripcion', 'LIKE', '%'.$request->search.'%')->orWhere('modelo', 'LIKE', '%'.$request->search.'%')->paginate(10);
+        }else{
+            $accesorios = Accesorio::orderBy('created_at', 'desc')->paginate(10);
+        }
+        return view('accesorio.index', ['accesorios'=>$accesorios]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($slug = null)
     {
-        return view('accesorio.create', ['equipos'=>Equipo::all(), 'marcas'=>Marca::all(), 'accesorio'=>new Accesorio()]);
+        $equipos = Equipo::select(['id', 'descripcion'])->get();
+        $marcas = Marca::select(['id', 'nombre'])->get();
+        if($slug == null){
+            return view('accesorio.create', ['equipos'=>$equipos, 'marcas'=>$marcas, 'accesorio'=>new Accesorio()]);
+        }else{
+            $equipo = Equipo::where('slug', '=', $slug)->first();
+            return view('accesorio.create', ['equipos'=>$equipos, 'marcas'=>$marcas, 'accesorio'=>new Accesorio(['id_equipo'=>$equipo->id])]);
+        }
     }
 
     /**
@@ -44,7 +49,12 @@ class AccesorioController extends Controller
             'cantidad' => 'required|integer',
         ]);
         Accesorio::create($request->all());
-        return redirect()->route('accesorio.index');
+        if($request->slug == null){
+            return redirect()->route('accesorio.index');
+        }else{
+            $equipo = Equipo::where('id', '=', $request->slug)->first();
+            return redirect()->route('equipo.show', $equipo->slug);
+        }
     }
 
     /**

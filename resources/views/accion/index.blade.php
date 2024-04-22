@@ -38,6 +38,9 @@
                             Equipo
                         </th>
                         <th scope="col" class="px-6 py-3">
+                            Estado
+                        </th>
+                        <th scope="col" class="px-6 py-3">
                             Action
                         </th>
                     </tr>
@@ -50,6 +53,9 @@
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $accion->equipos->descripcion }}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ $accion->estado }}
                         </th>
                         <td class="px-6 py-4 flex gap-4">
                             <a href="{{ route('accion.edit', $accion->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>

@@ -56,7 +56,7 @@
                             {{ $accesorio->descripcion }}
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $accesorio->equipo->descripcion }}
+                            {{ $accesorio->marca->nombre }}
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $accesorio->modelo?$accesorio->modelo:'null'  }}

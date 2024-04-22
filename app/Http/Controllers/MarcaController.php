@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Marca;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class MarcaController extends Controller
 {
@@ -89,6 +90,8 @@ class MarcaController extends Controller
     {
         $marcas = Marca::all();
         $user = Auth::user()->name;
+        $pdf = Pdf::loadView('marca.pdf', compact('marcas', 'user'));
+        return $pdf->stream();
         return view('marca.pdf', compact('marcas', 'user'));
     }
 }

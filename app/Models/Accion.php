@@ -9,7 +9,7 @@ class Accion extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id_equipo', 'id_user', 'descripcion'];
+    protected $fillable = ['id_equipo', 'id_user', 'descripcion', 'estado'];
 
     public function equipos(){
         return $this->belongsTo(Equipo::class, 'id_equipo');

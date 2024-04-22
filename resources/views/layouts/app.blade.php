@@ -33,8 +33,8 @@
                 {{ $slot }}
             </main>
 
-            <footer class="fixed bottom-0 left-0 right-0">
-                <p class="text-center">© 2024 Comstres™ es una marca registrada. All Rights Reserved.</p>
+            <footer class="relative bottom-0 left-0 right-0">
+                <p class="text-center p-4">© 2024 Comstres™ es una marca registrada. All Rights Reserved.</p>
             </footer>
         </div>
     </body>

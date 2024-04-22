@@ -5,37 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Marca</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .container{
+            max-width: 1200px;
+            margin: 0 auto;
+            font-size: 1.1em;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .titulo{
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+        }
+        th, td {
+            border: 1px solid;
+            
+        }
+        table{
+            width: 100%;
+            border: 1px solid;
+            border-collapse: collapse;
+        }
+        .head > th{
+            padding: 5px 0;
+        }
+        .body > th{
+            font-weight: initial;
+            padding: 5px 0;
+        }
+        
+    </style>
 </head>
 <body>
-    <div class="container mx-auto py-4">
-        <h1 class="text-center text-2xl font-bold">Reporte de marcas</h1>
-        <p>Reporte generado por: {{ $user }}</p>
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">
+    <div class="container">
+        <h1 class="titulo">Reporte de marcas</h1>
+        <p class="prosa">Reporte generado por: {{ $user }}</p>
+        <div class="">
+            <table class="table">
+                <thead class="">
+                    <tr class="head">
+                        <th scope="" class="">
+                            Item
+                        </th>
+                        <th scope="" class="">
                             Nombre
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="" class="">
                             Fecha 
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($marcas as $marca)
-                    <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <tr class="body">
+                        <th scope="" class="">
+                            {{ $loop->index + 1 }}
+                        </th>
+                        <th scope="" class="">
                             {{ $marca->nombre }}
                         </th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th scope="" class="">
                             {{ date('d-m-Y', strtotime($marca->created_at)) }}
                         </th>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
+            <p>Total registros:  {{ $marcas->count() }}</p>
         </div>
     </div>
 </body>

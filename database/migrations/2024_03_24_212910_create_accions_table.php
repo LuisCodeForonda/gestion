@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('id_equipo')->nullable()->constrained('equipos')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('id_user')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->text('descripcion', 200);
+            $table->text('estado', 30);
             $table->timestamps();
         });
     }

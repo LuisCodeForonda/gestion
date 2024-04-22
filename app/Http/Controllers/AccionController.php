@@ -40,10 +40,12 @@ class AccionController extends Controller
     {
         request()->validate([
             'descripcion' => 'required',
+            'estado' => 'required',
             'id_equipo' => 'required',
         ]);
         Accion::create([
             'descripcion' => $request->descripcion,
+            'estado' => $request->estado,
             'id_user' => Auth::getUser()->id,
             'id_equipo' => $request->id_equipo,
         ]);
@@ -73,6 +75,7 @@ class AccionController extends Controller
     {
         request()->validate([
             'descripcion' => 'required',
+            'estado' => 'required',
             'id_equipo' => 'required',
         ]);
         $accion->update($request->all());

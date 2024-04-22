@@ -6,11 +6,16 @@
             <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
         </div>
         <div>
+            <label for="estado" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estado</label>
+            <input type="text" id="estado" name="estado" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="{{ $accion->estado }}" />
+            <x-input-error :messages="$errors->get('estado')" class="mt-2" />
+        </div>
+        <div class="{{ $accion->id_equipo? 'hidden':''}}">
             <label for="id_equipo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
             <select id="id_equipo" name="id_equipo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <option value="">Escoge un equipo</option>
             @foreach ($equipos as $equipo)
-                <option value="{{ $equipo->id }}" @selected($accion->id_equipo==$equipo->id)>{{ $equipo->descripcion }}</option>
+                <option value="{{ $equipo->id }}" @selected($equipo->id == $accion->id_equipo)>{{ $equipo->descripcion }}</option>
             @endforeach
             </select>
             <x-input-error :messages="$errors->get('id_equipo')" class="mt-2" />

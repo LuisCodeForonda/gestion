@@ -11,8 +11,13 @@ use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
 
-    public function index(){
-        return view('usuario.index', ['usuarios'=>User::orderBy('created_at', 'desc')->paginate(10)]);
+    public function index(Request $request){
+        if($request->has('search')){
+            $usuarios = User::where('name', 'LIKE', '%'.$request->search.'%')->paginate(10);
+        }else{
+            $usuarios = User::orderBy('created_at', 'desc')->paginate(10);
+        }
+        return view('usuario.index', ['usuarios'=>$usuarios]);
     }
 
     public function create()
