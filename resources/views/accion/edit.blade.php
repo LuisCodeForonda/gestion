@@ -9,6 +9,7 @@
     <form action="{{ route('accion.update', $accion->id) }}" method="post">
         @csrf
         @method('put')
+        <input type="hidden" name="slug" value={{ $slug }}>
         @include('accion.form')
     </form>
     

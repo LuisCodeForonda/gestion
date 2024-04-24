@@ -4,19 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Accion;
 use App\Models\Equipo;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AccionController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('permission:dahsboard.accion.index', ['only' => ['index']]);
-        $this->middleware('permission:dahsboard.accion.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:dahsboard.accion.edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:dahsboard.accion.destroy', ['only' => ['destroy']]);
-    }
     /**
      * Display a listing of the resource.
      */
@@ -28,9 +20,14 @@ class AccionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($slug = null)
     {
-        return view('accion.create', ['equipos'=>Equipo::all(), 'accion'=>new Accion()]);
+        if($slug == null){
+            return view('accion.create', ['equipos'=>Equipo::all(), 'accion'=>new Accion(), 'slug'=>'']);
+        }else{
+            $equipo = Equipo::where('slug', '=', $slug)->first();
+            return view('accion.create', ['equipos'=>Equipo::all(), 'accion'=>new Accion(['id_equipo'=>$equipo->id]), 'slug'=>$slug]);
+        }
     }
 
     /**
@@ -49,7 +46,11 @@ class AccionController extends Controller
             'id_user' => Auth::getUser()->id,
             'id_equipo' => $request->id_equipo,
         ]);
-        return redirect()->route('accion.index');
+        if($request->slug == null){
+            return redirect()->route('accion.index');
+        }else{
+            return redirect()->route('equipo.show', $request->slug);
+        }
     }
 
     /**
@@ -63,9 +64,9 @@ class AccionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Accion $accion)
+    public function edit(Accion $accion, $slug = null)
     {
-        return view('accion.edit', ['equipos'=>Equipo::all(), 'accion'=>$accion]);
+        return view('accion.edit', ['equipos'=>Equipo::all(), 'accion'=>$accion, 'slug'=>$slug]);
     }
 
     /**
@@ -79,15 +80,23 @@ class AccionController extends Controller
             'id_equipo' => 'required',
         ]);
         $accion->update($request->all());
-        return redirect()->route('accion.index');
+        if($request->slug == null){
+            return redirect()->route('accion.index');
+        }else{
+            return redirect()->route('equipo.show', $request->slug);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Accion $accion)
+    public function destroy(Request $request, Accion $accion)
     {
         $accion->delete();
-        return redirect()->route('accion.index');
+        if($request->slug == null){
+            return redirect()->route('accion.index');
+        }else{
+            return redirect()->route('equipo.show', $request->slug);
+        }
     }
 }

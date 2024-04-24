@@ -8,7 +8,7 @@
     
     <div class="container mx-auto grid grid-cols-2 gap-4">
         
-        <div class="">
+        <div class=" dark:text-gray-200">
             <h2 class="text-xl">Informacion del equipo</h2>
             <span class="font-bold">Descripcion</span>
             <p>{{ $equipo->descripcion }}</p>
@@ -19,7 +19,8 @@
             <p><span class="font-bold">fecha: </span>{{ date('d-m-Y', strtotime($equipo->created_at)) }}</p>
             <div class="flex gap-2">
                 <a href="{{ route('accesorio.create', $equipo->slug) }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Agregar Accesorio</a>
-                <a href="{{ route('equipo.add-accion', $equipo) }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Agregar Accion</a>
+                <a href="{{ route('accion.create', $equipo->slug) }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Agregar Accion</a>
+                <a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Generar Reporte</a>
             </div>
         </div>
         <div class="flex flex-col items-center">
@@ -49,7 +50,7 @@
                             Serie
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Cantidad
+                            Acciones
                         </th>
                     </tr>
                 </thead>
@@ -68,8 +69,14 @@
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $accesorio->serie }}
                         </td>
-                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $accesorio->cantidad }}
+                        <td class="px-6 py-4 flex gap-4">
+                            <a href="{{ route('accesorio.edit', ['accesorio'=>$accesorio->id, 'equipo'=>$equipo->slug]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
+                            <form action="{{ route('accesorio.destroy', $accesorio->id) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <input type="hidden" name="slug" value="{{ $equipo->slug }}">
+                                <input type="submit" value="Eliminar" class="font-medium text-red-600 dark:text-red-500 hover:underline">
+                            </form>
                         </td>
                     </tr>
                     @endforeach
@@ -96,7 +103,7 @@
                             Usuario
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Fecha
+                            Acciones
                         </th>
                     </tr>
                 </thead>
@@ -112,9 +119,15 @@
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $accion->usuarios->name }}
                         </th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ date('d-m-Y H:m', strtotime($accion->created_at)) }}
-                        </th>
+                        <td class="px-6 py-4 flex gap-4">
+                            <a href="{{ route('accion.edit', ['accion'=>$accion->id, 'equipo'=>$equipo->slug]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
+                            <form action="{{ route('accion.destroy', $accion->id) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <input type="hidden" name="slug" value="{{ $equipo->slug }}">
+                                <input type="submit" value="Eliminar" class="font-medium text-red-600 dark:text-red-500 hover:underline">
+                            </form>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

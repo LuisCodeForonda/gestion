@@ -32,20 +32,24 @@ Route::prefix('/dashboard')->group(function () {
     Route::resource('marca', MarcaController::class)->middleware('auth');
     Route::resource('equipo', EquipoController::class)->middleware('auth');
     
-    
-    Route::get('equipo/{equipo}/add-accesorio', [EquipoController::class, 'addAccesorio'])->name('equipo.add-accesorio')->middleware('auth');
-    Route::post('equipo/{equipo}/add-accesorio', [EquipoController::class, 'storeAccesorio'])->name('equipo.store-accesorio')->middleware('auth');
-    Route::get('equipo/{equipo}/add-accion', [EquipoController::class, 'addAccion'])->name('equipo.add-accion')->middleware('auth');
-    Route::post('equipo/{equipo}/add-accion', [EquipoController::class, 'storeAccion'])->name('equipo.store-accion')->middleware('auth');
     //Route::resource('accesorio', AccesorioController::class)->middleware('auth');
-    Route::resource('accion', AccionController::class)->middleware('auth');
     Route::get('/accesorio', [AccesorioController::class, 'index'])->name('accesorio.index')->middleware(['auth', 'permission:dahsboard.accesorio.index']);
     Route::post('/accesorio', [AccesorioController::class, 'store'])->name('accesorio.store')->middleware(['auth', 'permission:dahsboard.accesorio.create']);
     Route::get('/accesorio/create/{equipo?}', [AccesorioController::class, 'create'])->name('accesorio.create')->middleware(['auth', 'permission:dahsboard.accesorio.create']);
     Route::get('/accesorio/{accesorio}', [AccesorioController::class, 'show'])->name('accesorio.show')->middleware(['auth']);
     Route::put('/accesorio/{accesorio}', [AccesorioController::class, 'update'])->name('accesorio.update')->middleware(['auth', 'permission:dahsboard.accesorio.edit']);
     Route::delete('/accesorio/{accesorio}', [AccesorioController::class, 'destroy'])->name('accesorio.destroy')->middleware(['auth', 'permission:dahsboard.accesorio.destroy']);
-    Route::get('/accesorio/{accesorio}/edit', [AccesorioController::class, 'edit'])->name('accesorio.edit')->middleware(['auth', 'permission:dahsboard.accesorio.edit']);
+    Route::get('/accesorio/{accesorio}/edit/{equipo?}', [AccesorioController::class, 'edit'])->name('accesorio.edit')->middleware(['auth', 'permission:dahsboard.accesorio.edit']);
+    
+    //Route::resource('/accion', AccionController::class)->middleware('auth');
+    Route::get('/accion', [AccionController::class, 'index'])->name('accion.index')->middleware(['auth', 'permission:dahsboard.accion.index']);
+    Route::post('/accion', [AccionController::class, 'store'])->name('accion.store')->middleware(['auth', 'permission:dahsboard.accion.create']);
+    Route::get('/accion/create/{equipo?}', [AccionController::class, 'create'])->name('accion.create')->middleware(['auth', 'permission:dahsboard.accion.create']);
+    Route::get('/accion/{accion}', [AccionController::class, 'show'])->name('accion.show')->middleware(['auth', '']);
+    Route::put('/accion/{accion}', [AccionController::class, 'update'])->name('accion.update')->middleware(['auth', 'permission:dahsboard.accion.edit']);
+    Route::delete('/accion/{accion}', [AccionController::class, 'destroy'])->name('accion.destroy')->middleware(['auth', 'permission:dahsboard.accion.destroy']);
+    Route::get('/accion/{accion}/edit/{equipo?}', [AccionController::class, 'edit'])->name('accion.edit')->middleware(['auth', 'permission:dahsboard.accion.edit']);
+
     Route::resource('usuario', UserController::class)->middleware('auth');
     Route::resource('rol', RolController::class)->middleware('auth');
 });

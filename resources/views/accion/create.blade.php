@@ -8,6 +8,7 @@
     
     <form action="{{ route('accion.store') }}" method="post">
         @csrf
+        <input type="hidden" name="slug" value="{{ $slug }}">
         @include('accion.form')
     </form>
 </x-app-layout>

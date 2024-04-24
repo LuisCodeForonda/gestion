@@ -31,7 +31,7 @@ class AccesorioController extends Controller
         $marcas = Marca::select(['id', 'nombre'])->get();
         if($slug == null){
             return view('accesorio.create', ['equipos'=>$equipos, 'marcas'=>$marcas, 'accesorio'=>new Accesorio()]);
-        }else{
+        }else{ 
             $equipo = Equipo::where('slug', '=', $slug)->first();
             return view('accesorio.create', ['equipos'=>$equipos, 'marcas'=>$marcas, 'accesorio'=>new Accesorio(['id_equipo'=>$equipo->id])]);
         }
@@ -68,9 +68,9 @@ class AccesorioController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Accesorio $accesorio)
+    public function edit(Accesorio $accesorio, $slug = null)
     {
-        return view('accesorio.edit', ['equipos'=>Equipo::all(),'marcas'=>Marca::all(), 'accesorio'=>$accesorio]);
+        return view('accesorio.edit', ['equipos'=>Equipo::all(), 'marcas'=>Marca::all(), 'accesorio'=>$accesorio, 'slug'=>$slug]);
     }
 
     /**
@@ -83,15 +83,23 @@ class AccesorioController extends Controller
             'id_equipo' => 'required',
         ]);
         $accesorio->update($request->all());
-        return redirect()->route('accesorio.index');
+        if($request->slug == null){
+            return redirect()->route('accesorio.index');
+        }else{
+            return redirect()->route('equipo.show', $request->slug);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Accesorio $accesorio)
+    public function destroy(Request $request, Accesorio $accesorio)
     {
         $accesorio->delete();
-        return redirect()->route('accesorio.index');
+        if($request->slug == null){
+            return redirect()->route('accesorio.index');
+        }else{
+            return redirect()->route('equipo.show', $request->slug);
+        }
     }
 }

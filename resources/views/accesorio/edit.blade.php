@@ -6,9 +6,10 @@
     </x-slot>
 
     
-    <form action="{{ route('accesorio.update', $accesorio->id) }}" method="post">
+    <form action="{{ route('accesorio.update', $accesorio) }}" method="post">
         @csrf
         @method('put')
+        <input type="hidden" name="slug" value={{ $slug }}>
         @include('accesorio.form')
     </form>
     
