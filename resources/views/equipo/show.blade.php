@@ -20,13 +20,13 @@
             <div class="flex gap-2">
                 <a href="{{ route('accesorio.create', $equipo->slug) }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Agregar Accesorio</a>
                 <a href="{{ route('accion.create', $equipo->slug) }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Agregar Accion</a>
-                <a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Generar Reporte</a>
+                <a href="{{ route('equipo.pdf', $equipo->slug) }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Generar Reporte</a>
             </div>
         </div>
         <div class="flex flex-col items-center">
             <h2 class="text-xl">QR del equipo</h2>
             <p id="qrslug" class="hidden">{{ 'https://admin.ctvbolivia.com/dashboard/equipo/'.$equipo->slug }}</p>
-            <div id="contenedorQR" class="flex justify-center p-4"></div>
+            <div id="contenedorQR" class="flex justify-center p-4">{!! $qrcode !!}</div>
             <button id="descargarQR" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Descargar QR</button>
         </div>
         
@@ -111,7 +111,7 @@
                     @foreach ($acciones as $accion)
                     <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $accion->descripcion }}
+                            {{ Str::limit($accion->descripcion, 50) }}
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $accion->estado }}
@@ -139,7 +139,7 @@
     </div>
 
     <script>
-         function mostrarQR() {
+        function mostrarQR() {
             var contenedorQR = document.getElementById("contenedorQR");
             var textoQR = document.getElementById("qrslug").innerHTML; // El texto que quieres codificar en el QR
 
@@ -153,7 +153,7 @@
         }
 
         // Llama a la función para mostrar el QR cuando la página se carga
-        window.onload = mostrarQR;
+        //window.onload = mostrarQR;
 
         function descargarQR() {
             var contenedorQR = document.getElementById("contenedorQR");

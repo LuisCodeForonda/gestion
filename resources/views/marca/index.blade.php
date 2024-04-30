@@ -12,7 +12,16 @@
         @endcan
         <div class="flex items-center gap-2">   
             <a href="{{ route('marca.pdf') }}" class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Generar PDF</a>
-            <form class="flex items-center w-72 max-w-lg">   
+  
+            <form class="flex items-center  bg-slate-500">
+                
+                <select id="countries" name="mostrar" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-44 p-2.5 mr-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="10" selected>10 registros</option>
+                <option value="25">25 registros</option>
+                <option value="50">50 registros</option>
+                <option value="100">100 registros</option>
+                </select>   
+                
                 <label for="simple-search" class="sr-only">Search</label>
                 <div class="relative w-full">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">

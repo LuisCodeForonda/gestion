@@ -30,6 +30,7 @@ Route::prefix('/dashboard')->group(function () {
     })->middleware(['auth', 'can:dahsboard.index'])->name('dashboard');
     Route::get('marca/pdf', [MarcaController::class, 'pdf'])->name('marca.pdf')->middleware('auth');
     Route::resource('marca', MarcaController::class)->middleware('auth');
+    Route::get('equipo/pdf/{equipo?}', [EquipoController::class, 'pdf'])->name('equipo.pdf')->middleware('auth');
     Route::resource('equipo', EquipoController::class)->middleware('auth');
     
     //Route::resource('accesorio', AccesorioController::class)->middleware('auth');

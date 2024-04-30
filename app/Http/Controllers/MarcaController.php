@@ -22,9 +22,9 @@ class MarcaController extends Controller
     public function index(Request $request)
     {
         if($request->has('search')){
-            $marcas = Marca::where('nombre', 'LIKE', '%'.$request->search.'%')->paginate(10);
+            $marcas = Marca::where('nombre', 'LIKE', '%'.$request->search.'%')->paginate($request->mostrar?$request->mostrar:10);
         }else{
-            $marcas = Marca::orderBy('created_at', 'desc')->paginate(10);
+            $marcas = Marca::orderBy('created_at', 'desc')->paginate($request->mostrar?$request->mostrar:10);
         }
         return view('marca.index', ['marcas'=>$marcas]);
     }

@@ -9,6 +9,8 @@ use App\Models\Marca;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class EquipoController extends Controller
 {
@@ -71,7 +73,8 @@ class EquipoController extends Controller
         $equipo = Equipo::where('slug', '=', $slug)->first();
         $accesorios = Accesorio::where('id_equipo', '=', $equipo->id)->orderBy('created_at', 'desc')->get();
         $acciones = Accion::where('id_equipo', '=', $equipo->id)->orderBy('created_at', 'desc')->get();
-        return view('equipo.show', compact('equipo', 'accesorios', 'acciones'));
+        $qrcode = QrCode::size(256)->generate('https://admin.ctvbolivia.com/dashboard/equipo/'.$equipo->slug);
+        return view('equipo.show', compact('equipo', 'accesorios', 'acciones', 'qrcode'));
     }
 
     /**
@@ -109,48 +112,27 @@ class EquipoController extends Controller
         $equipo->delete();
         return redirect()->route('equipo.index');
     }
-
-    public function addAccesorio(Equipo $equipo){
-        $accesorio = new Accesorio(['id_equipo' => $equipo->id]);
-        $equipos = Equipo::select(['id', 'descripcion', 'slug'])->get();
-        $marcas = Marca::select(['id', 'nombre'])->get();
-        return view('equipo.add_accesorio', ['equipo'=>$equipo, 'accesorio'=>$accesorio, 'equipos'=>$equipos, 'marcas'=>$marcas]);
-    }
     
-
-    public function storeAccesorio(Request $request, Equipo $equipo)
+    public function pdf(Request $request, $slug = null)
     {
-        request()->validate([
-            'descripcion' => 'required',
-            'id_equipo' => 'required',
-            'id_marca' => 'required',
-            'cantidad' => 'required|integer',
-        ]);
-        Accesorio::create($request->all());
-        return redirect()->route('equipo.show', $equipo->slug);
-    }
-
-    public function addAccion(Equipo $equipo){
-        $equipos = Equipo::select(['id', 'descripcion', 'slug'])->get();
-        $accion = new Accion(['id_equipo'=>$equipo->id]);
-        return view('equipo.add-accion', ['equipo'=>$equipo, 'accion'=>$accion, 'equipos'=>$equipos]);
-    }
-
-    public function storeAccion(Request $request, Equipo $equipo){
-        request()->validate([
-            'descripcion' => 'required',
-            'estado' => 'required',
-            'id_equipo' => 'required',
-        ]);
-
-        Accion::create([
-            'descripcion' => $request->descripcion,
-            'estado' => $request->estado,
-            'id_user' => Auth::getUser()->id,
-            'id_equipo' => $request->id_equipo,
-        ]);
-
-        return redirect()->route('equipo.show', $equipo->slug);
+        if($slug){
+            $equipo = Equipo::where('slug', '=', $slug)->first();
+            $accesorios = Accesorio::where('id_equipo', '=', $equipo->id)->orderBy('created_at', 'desc')->get();
+            $acciones = Accion::where('id_equipo', '=', $equipo->id)->orderBy('created_at', 'desc')->get();
+            $user = Auth::user()->name;
+            $qrcode = QrCode::size(256)->generate('https://admin.ctvbolivia.com/dashboard/equipo/'.$equipo->slug);
+            //$pdf = Pdf::loadView('equipo.showpdf', compact('equipo', 'accesorios', 'acciones', 'user', 'qrcode'));
+            //$pdf = Pdf::loadHTML('<img src="data:image/png;base64,' . base64_encode($qrcode) . '">');
+            $pdf = Pdf::loadHTML(view('equipo.showpdf', compact('equipo', 'accesorios', 'acciones', 'user', 'qrcode')));
+            return $pdf->stream();
+        }else{
+            $equipos = Equipo::all();
+            $user = Auth::user()->name;
+            $pdf = Pdf::loadView('equipo.pdf', compact('equipos', 'user'));
+            return $pdf->stream();
+            return view('equipo.pdf', compact('equipos', 'user'));
+        }
+       
     }
     
 }
