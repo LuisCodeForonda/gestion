@@ -9,13 +9,13 @@ class Accion extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id_equipo', 'id_user', 'descripcion', 'estado'];
+    protected $fillable = ['equipo_id', 'user_id', 'descripcion', 'estado'];
 
     public function equipos(){
-        return $this->belongsTo(Equipo::class, 'id_equipo');
+        return $this->belongsTo(Equipo::class, 'equipo_id');
     }
 
     public function usuarios(){
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

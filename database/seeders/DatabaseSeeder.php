@@ -72,11 +72,12 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\Equipo::create([
-            'descripcion' => 'Televisor 24" Full HD',
-            'id_marca' => 1,
-            'serietec' => '99273kdkjd38djdf',
-            'slug' => '99273kdkjd38djdf',
-            'estado' => 'Operativo',
+            'descripcion' => 'Televisor 55" Full HD',
+            'marca_id' => 1,
+            'modelo' => 'tv552024uhd',
+            'serietec' => 'TEC-MON-021',
+            'slug' => 'tec-mod-021',
+            'estado' => '1',
         ]);
 
 

@@ -5,8 +5,12 @@
         </h2>
     </x-slot>
 
- 
-    <div class="container mx-auto flex justify-between items-center">
+    <div class="container mx-auto">
+        @livewire('marca-component')
+    </div>
+   
+
+    {{-- <div class="container mx-auto flex justify-between items-center">
         @can('dahsboard.marca.create')
         <a href="{{ route('marca.create') }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Nuevo</a>
         @endcan
@@ -38,6 +42,7 @@
                     <span class="sr-only">Search</span>
                 </button>
             </form>
+           
         </div>
     </div>
     
@@ -85,7 +90,7 @@
             </table>
             {{ $marcas->links() }}
         </div>
-    </div>
+    </div> --}}
 </x-app-layout>
 
     

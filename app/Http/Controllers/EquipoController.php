@@ -71,8 +71,8 @@ class EquipoController extends Controller
     public function show($slug)
     {
         $equipo = Equipo::where('slug', '=', $slug)->first();
-        $accesorios = Accesorio::where('id_equipo', '=', $equipo->id)->orderBy('created_at', 'desc')->get();
-        $acciones = Accion::where('id_equipo', '=', $equipo->id)->orderBy('created_at', 'desc')->get();
+        $accesorios = Accesorio::where('equipo_id', '=', $equipo->id)->orderBy('created_at', 'desc')->get();
+        $acciones = Accion::where('equipo_id', '=', $equipo->id)->orderBy('created_at', 'desc')->get();
         $qrcode = QrCode::size(256)->generate('https://admin.ctvbolivia.com/dashboard/equipo/'.$equipo->slug);
         return view('equipo.show', compact('equipo', 'accesorios', 'acciones', 'qrcode'));
     }

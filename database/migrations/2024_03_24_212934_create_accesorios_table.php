@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('accesorios', function (Blueprint $table) {
             $table->id();
             $table->text('descripcion', 200);
-            $table->foreignId('id_equipo')->nullable()->constrained('equipos')->cascadeOnUpdate()->nullOnDelete();
-            $table->foreignId('id_marca')->nullable()->constrained('marcas')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignId('equipo_id')->nullable()->constrained('equipos')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignId('marca_id')->nullable()->constrained('marcas')->onUpdate('cascade')->onDelete('set null');
             $table->string('modelo', 30)->nullable();
             $table->string('serie', 50)->nullable();
             $table->integer('cantidad');

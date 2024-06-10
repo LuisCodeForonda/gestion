@@ -4,6 +4,7 @@ use App\Http\Controllers\AccesorioController;
 use App\Http\Controllers\AccionController;
 use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UserController;
@@ -53,6 +54,8 @@ Route::prefix('/dashboard')->group(function () {
 
     Route::resource('usuario', UserController::class)->middleware('auth');
     Route::resource('rol', RolController::class)->middleware('auth');
+
+    Route::get('/persona', [PersonaController::class, 'index'])->name('persona.index');
 });
 
 

@@ -72,6 +72,14 @@
                     </x-nav-link>
                 </div>    
                 @endcan
+                @can('dahsboard.accion.index')
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('persona.index')" :active="
+                        request()->routeIs('persona.index')">
+                        {{ __('Personas') }}
+                    </x-nav-link>
+                </div>    
+                @endcan
             </div>
 
             <!-- Settings Dropdown -->

@@ -10,10 +10,14 @@ class Equipo extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['descripcion', 'id_marca', 'modelo', 'serie', 'serietec', 'estado', 'slug'];
+    protected $fillable = ['descripcion', 'marca_id', 'modelo', 'serie', 'serietec', 'estado', 'observaciones', 'persona_id','slug'];
 
     public function marca(){
-        return $this->belongsTo(Marca::class, 'id_marca');
+        return $this->belongsTo(Marca::class, 'marca_id');
+    }
+
+    public function persona(){
+        return $this->belongsTo(Persona::class, 'persona_id');
     }
 
 }

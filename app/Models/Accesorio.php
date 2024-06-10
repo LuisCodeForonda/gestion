@@ -9,13 +9,13 @@ class Accesorio extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['descripcion', 'id_equipo', 'id_marca', 'modelo', 'serie', 'cantidad'];
+    protected $fillable = ['descripcion', 'equipo_id', 'marca_id', 'modelo', 'serie', 'cantidad'];
 
     public function marca(){
-        return $this->belongsTo(Marca::class, 'id_marca');
+        return $this->belongsTo(Marca::class, 'marca_id');
     }
 
     public function equipo(){
-        return $this->belongsTo(Equipo::class, 'id_equipo');
+        return $this->belongsTo(Equipo::class, 'equipo_id');
     }
 }

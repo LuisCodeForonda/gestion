@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('equipos', function (Blueprint $table) {
             $table->id();
-            $table->text('descripcion', 200);
-            $table->foreignId('id_marca')->nullable()->constrained('marcas')->cascadeOnUpdate()->nullOnDelete();
+            $table->longText('descripcion', 400);
+            $table->foreignId('marca_id')->nullable()->constrained('marcas')->cascadeOnUpdate()->nullOnDelete();
             $table->string('modelo', 30)->nullable();
             $table->string('serie', 50)->nullable();
             $table->string('serietec', 50)->unique();
-            $table->string('estado', 30);
+            $table->tinyInteger('estado');
+            $table->string('observaciones', 150)->nullable();
+            $table->foreignId('persona_id')->nullable()->constrained('personas')->cascadeOnUpdate()->nullOnDelete();
             $table->string('slug', 50)->unique();
             $table->timestamps(); 
         });
