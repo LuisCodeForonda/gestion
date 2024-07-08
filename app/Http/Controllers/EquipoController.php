@@ -117,8 +117,8 @@ class EquipoController extends Controller
     {
         if($slug){
             $equipo = Equipo::where('slug', '=', $slug)->first();
-            $accesorios = Accesorio::where('id_equipo', '=', $equipo->id)->orderBy('created_at', 'desc')->get();
-            $acciones = Accion::where('id_equipo', '=', $equipo->id)->orderBy('created_at', 'desc')->get();
+            $accesorios = Accesorio::where('equipo_id', '=', $equipo->id)->orderBy('created_at', 'desc')->get();
+            $acciones = Accion::where('equipo_id', '=', $equipo->id)->orderBy('created_at', 'desc')->get();
             $user = Auth::user()->name;
             $qrcode = QrCode::size(256)->generate('https://admin.ctvbolivia.com/dashboard/equipo/'.$equipo->slug);
             //$pdf = Pdf::loadView('equipo.showpdf', compact('equipo', 'accesorios', 'acciones', 'user', 'qrcode'));

@@ -150,7 +150,20 @@
                     </tr>
                     <tr>
                         <td>{{ $accion->usuarios->name }}</td>
-                        <td>{{ $accion->estado }}</td>
+                        <td>
+                            @if ($accion->estado == 1)
+                            Operativo
+                            @endif
+                            @if ($accion->estado == 2)
+                                    Mantenimiento
+                            @endif
+                            @if ($accion->estado == 3)
+                                    Stand By
+                            @endif
+                            @if ($accion->estado == 4)
+                                    Malo
+                            @endif
+                        </td>
                         <td>{{ $accion->created_at}}</td>
                     </tr>
                 </tbody>

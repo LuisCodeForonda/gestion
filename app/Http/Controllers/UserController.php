@@ -12,14 +12,15 @@ class UserController extends Controller
 {
 
     public function index(Request $request){
-        if($request->has('search')){
-            $usuarios = User::where('name', 'LIKE', '%'.$request->search.'%')->paginate(10);
-        }else{
-            $usuarios = User::orderBy('created_at', 'desc')->paginate(10);
-        }
-        return view('usuario.index', ['usuarios'=>$usuarios]);
+        // if($request->has('search')){
+        //     $usuarios = User::where('name', 'LIKE', '%'.$request->search.'%')->paginate(10);
+        // }else{
+        //     $usuarios = User::orderBy('created_at', 'desc')->paginate(10);
+        // }
+        return view('usuario.index');
     }
 
+    /*
     public function create()
     {
         return view('usuario.create', ['usuario'=>new User(), 'rolActual'=>'', 'roles'=>Role::all()]);
@@ -28,6 +29,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    /*
     public function store(Request $request)
     {
         $request->validate([
@@ -53,6 +55,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+    /*
     public function edit(User $usuario)
     {
         $rol = $usuario->getRoleNames()->first();
@@ -62,6 +65,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    /*
     public function update(Request $request, User $usuario)
     {
         $usuario->syncRoles($request->rol);
@@ -71,9 +75,10 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    /*
     public function destroy(User $marca)
     {
         return redirect()->route('marca.index');
-    }
+    }*/
 
 }

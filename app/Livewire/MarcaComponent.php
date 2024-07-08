@@ -11,7 +11,7 @@ class MarcaComponent extends Component
 {
     use WithPagination;
 
-    #[Rule('required|min:3|max:30')]
+    #[Rule('required|min:2|max:30|unique:marcas')]
     public $nombre;
 
     public $marca = null;

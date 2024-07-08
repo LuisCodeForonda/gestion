@@ -61,7 +61,18 @@
                         Estado
                     </th>
                     <td colspan="2">
-                        {{ $equipo->estado }}
+                        @if ($equipo->estado == 1)
+                                Operativo
+                        @endif
+                        @if ($equipo->estado == 2)
+                                Mantenimiento
+                        @endif
+                        @if ($equipo->estado == 3)
+                                Stand By
+                        @endif
+                        @if ($equipo->estado == 4)
+                                Malo
+                        @endif
                     </td>
                 </tr>
             </tbody>

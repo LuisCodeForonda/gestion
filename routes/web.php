@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccesorioController;
 use App\Http\Controllers\AccionController;
 use App\Http\Controllers\EquipoController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ProfileController;
@@ -26,9 +27,7 @@ Route::get('/', function () {
 });
 
 Route::prefix('/dashboard')->group(function () {
-    Route::get('', function () {
-        return view('dashboard');
-    })->middleware(['auth', 'can:dahsboard.index'])->name('dashboard');
+    Route::get('', [HomeController::class, 'index'])->middleware(['auth', 'can:dahsboard.index'])->name('dashboard');
     Route::get('marca/pdf', [MarcaController::class, 'pdf'])->name('marca.pdf')->middleware('auth');
     Route::resource('marca', MarcaController::class)->middleware('auth');
     Route::get('equipo/pdf/{equipo?}', [EquipoController::class, 'pdf'])->name('equipo.pdf')->middleware('auth');
@@ -51,11 +50,12 @@ Route::prefix('/dashboard')->group(function () {
     Route::put('/accion/{accion}', [AccionController::class, 'update'])->name('accion.update')->middleware(['auth', 'permission:dahsboard.accion.edit']);
     Route::delete('/accion/{accion}', [AccionController::class, 'destroy'])->name('accion.destroy')->middleware(['auth', 'permission:dahsboard.accion.destroy']);
     Route::get('/accion/{accion}/edit/{equipo?}', [AccionController::class, 'edit'])->name('accion.edit')->middleware(['auth', 'permission:dahsboard.accion.edit']);
-
-    Route::resource('usuario', UserController::class)->middleware('auth');
+    
+    Route::get('usuario', [UserController::class, 'index'])->name('usuario.index')->middleware(['auth', 'permission:dahsboard.usuario.index']);
     Route::resource('rol', RolController::class)->middleware('auth');
 
-    Route::get('/persona', [PersonaController::class, 'index'])->name('persona.index');
+    Route::get('persona/pdf', [PersonaController::class, 'pdf'])->name('persona.pdf')->middleware('auth');
+    Route::get('/persona', [PersonaController::class, 'index'])->name('persona.index')->middleware('auth');;
 });
 
 

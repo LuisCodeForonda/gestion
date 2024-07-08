@@ -12,7 +12,13 @@
                 </div>
                 <div>
                     <label for="estado" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estado</label>
-                    <input type="text" id="estado" wire:model="estado" name="estado" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                    <select id="estado" wire:model="estado" name="estado" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="">Selecciona un opcion</option>
+                        <option value="1" @selected($estado == 1)>Operativo</option>
+                        <option value="2" @selected($estado == 2)>Mantenimiento</option>
+                        <option value="3" @selected($estado == 3)>Stand By</option>
+                        <option value="4" @selected($estado == 4)>Malo</option>
+                    </select>
                     <x-input-error :messages="$errors->get('estado')" class="mt-2" />
                 </div>
                 {{-- <div>
@@ -91,7 +97,18 @@
                     {{ Str::limit($accion->descripcion, 50) }}
                 </th>
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ $accion->estado }}
+                    @if ($accion->estado == 1)
+                    <p class="text-green-600">Operativo</p>
+                    @endif
+                    @if ($accion->estado == 2)
+                        <p class="text-yellow-600">Mantenimiento</p>
+                    @endif
+                    @if ($accion->estado == 3)
+                        <p class="text-blue-600">Stand-by</p>
+                    @endif
+                    @if ($accion->estado == 4)
+                        <p class="text-red-600">Malo</p>
+                    @endif
                 </th>
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {{ $accion->usuarios->name }}
